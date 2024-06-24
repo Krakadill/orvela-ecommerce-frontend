@@ -14,21 +14,42 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
 
   useEffect(() => {
+    
     fetch("https://orvela-ecommerce-api.onrender.com/allproducts")
-      .then((res) => res.json())
-      .then((data) => setAll_Product(data));
-    if (localStorage.getItem("auth-token")) {
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => setAll_Product(data))
+      .catch((error) => {
+        console.error("Error fetching all products:", error);
+        // Handle error (e.g., set default state, show error message)
+      });
+
+    const authToken = localStorage.getItem("auth-token");
+    if (authToken) {
       fetch(`https://orvela-ecommerce-api.onrender.com/getcart`, {
         method: "POST",
         headers: {
-          Accept: "application/form-data",
-          "auth-token": `${localStorage.getItem("auth-token")}`,
+          Accept: "application/json",
           "Content-Type": "application/json",
+          "auth-token": authToken,
         },
-        body: "",
+        body: JSON.stringify({}), // Modify body as per your API requirements
       })
-        .then((res) => res.json())
-        .then((data) => setCartItems(data));
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return res.json();
+        })
+        .then((data) => setCartItems(data))
+        .catch((error) => {
+          console.error("Error fetching cart items:", error);
+          // Handle error (e.g., set default state, show error message)
+        });
     }
   }, []);
 
