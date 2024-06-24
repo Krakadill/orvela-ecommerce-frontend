@@ -42,11 +42,6 @@
   border-radius: 10px;
   background: #ff4141;
 }
-.nav-button:hover {
-  transition: 0.4s;
-  background: #ff4141;
-  color: #fff;
-}
 
 .nav-login-cart {
   display: flex;
@@ -65,6 +60,13 @@
   font-weight: 500;
   background: #fff;
   cursor: pointer;
+}
+.nav-login-cart button:hover {
+  transition: 0.4s;
+  background: #ff4141;
+  border: 1px solid #ff4141;
+
+  color: #fff;
 }
 .nav-login-cart button:active {
   background: #f3f3f3;
