@@ -5,7 +5,7 @@ import Item from "../Items/Item";
 const NewCollections = () => {
   const [new_collection, setNew_Collection] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:4000/newcollections")
+    fetch("https://orvela-ecommerce-api.onrender.com/newcollections")
       .then((res) => res.json())
       .then((data) => setNew_Collection(data));
   }, []);
